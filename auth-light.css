@@ -1,0 +1,216 @@
+/* auth-light.css - Estilos de Autenticação (Light Mode) */
+
+:root {
+    /* Cores e Gradientes (Ajustados para Light Mode) */
+    --primary-gradient: linear-gradient(135deg, #DC143C 0%, #1E90FF 100%); /* Gradiente do logo */
+    --bg-primary: #f0f2f5; /* Fundo claro principal */
+    --bg-secondary: #ffffff; /* Fundo do card */
+    --text-primary: #1a1a1a; /* Texto principal escuro */
+    --text-secondary: #555555; /* Texto secundário */
+    --accent-blue: #007AFF; /* Azul vibrante */
+    --accent-red: #DC143C; /* Vermelho vibrante */
+    --border-subtle: rgba(0, 0, 0, 0.1); /* Borda suave (escura) */
+
+    /* Sombras (Ajustadas para Light Mode) */
+    --shadow-elevated: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-floating: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+    /* Espaçamento */
+    --padding-base: 24px;
+    --gap-base: 20px;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow: hidden; /* Esconde barras de scroll */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Fundo Animado (Ajustado para Light Mode - mais sutil) */
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(45deg, #f0f2f5, #e8e8e8, #dddddd);
+    background-size: 400% 400%;
+    animation: gradientShiftLight 15s ease infinite;
+}
+
+.animated-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(30, 144, 255, 0.05) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes gradientShiftLight {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-0.5deg); }
+}
+
+
+/* Container Centralizado */
+.auth-container {
+    position: relative; /* Para z-index */
+    z-index: 1;
+    padding: 20px;
+    width: 100%;
+    max-width: 400px; /* Largura máxima para o card */
+}
+
+/* Card de Autenticação */
+.auth-card {
+    background: var(--bg-secondary); /* Fundo branco */
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: var(--shadow-elevated); /* Sombra proeminente */
+    border: 1px solid var(--border-subtle);
+}
+
+.logo {
+    margin-bottom: 30px;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 5px;
+    letter-spacing: -0.03em;
+}
+
+.logo p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.03); /* Fundo levemente escuro */
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.btn {
+    width: 100%;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: var(--shadow-floating);
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+}
+
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.message.success {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--accent-green);
+    border: 1px solid rgba(52, 199, 89, 0.2);
+}
+
+.message.error {
+    background: rgba(220, 20, 60, 0.15);
+    color: var(--accent-red);
+    border: 1px solid rgba(220, 20, 60, 0.2);
+}
+
+.auth-link {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.auth-link a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}

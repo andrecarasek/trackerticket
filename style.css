@@ -1,0 +1,887 @@
+/* style.css - Design Premium Apple Inspired (Dark Mode) */
+
+:root {
+    /* Cores e Gradientes */
+    --primary-gradient: linear-gradient(135deg, #DC143C 0%, #1E90FF 100%); /* Vermelho para Azul */
+    --secondary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --bg-primary: #0a0a0a; /* Fundo escuro principal */
+    --bg-secondary: #1a1a1a; /* Fundo de elementos como modal */
+    --bg-tertiary: #2a2a2a; /* Fundo de cards/painéis internos */
+    --surface-glass: rgba(255, 255, 255, 0.05); /* Base para efeito de vidro */
+    --surface-glass-hover: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff; /* Texto principal claro */
+    --text-secondary: #b0b0b0; /* Texto secundário */
+    --text-muted: #666666; /* Texto desabilitado/pequeno */
+    --accent-blue: #007AFF; /* Azul vibrante (Apple Blue) */
+    --accent-green: #34C759; /* Verde vibrante (Apple Green) */
+    --accent-orange: #FF9500; /* Laranja vibrante (Apple Orange) */
+    --accent-red: #DC143C; /* Vermelho vibrante (Apple Red) */
+    --border-subtle: rgba(255, 255, 255, 0.1); /* Borda suave */
+
+    /* Sombras */
+    --shadow-elevated: 0 20px 40px rgba(0, 0, 0, 0.3);
+    --shadow-floating: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+    /* Efeito de Vidro */
+    --blur-glass: blur(20px);
+
+    /* Espaçamento */
+    --padding-base: 24px;
+    --gap-base: 24px;
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; /* Fonte inspirada na Apple */
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden; /* Evita scroll horizontal */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* Melhor renderização de fonte */
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fundo Animado */
+.animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(45deg, #0a0a0a, #1a1a1a, #2a2a2a);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+.animated-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(30, 144, 255, 0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(2deg); }
+    66% { transform: translateY(10px) rotate(-1deg); }
+}
+
+/* Layout Principal */
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 280px;
+    background: var(--surface-glass);
+    backdrop-filter: var(--blur-glass);
+    border-right: 1px solid var(--border-subtle);
+    padding: var(--padding-base);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed; /* Fixo na lateral */
+    left: 0;
+    top: 0;
+    z-index: 1000;
+}
+
+.sidebar-header {
+    margin-bottom: 40px;
+    text-align: center; /* Centraliza a logo no sidebar */
+}
+
+.app-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+}
+
+.app-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.nav-menu {
+    flex: 1; /* Ocupa o espaço restante */
+    list-style: none; /* Remove marcadores de lista */
+    padding: 0;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+    border-radius: 12px; /* Cantos arredondados */
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background: var(--surface-glass-hover);
+    color: var(--text-primary);
+}
+
+.nav-item.active {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: var(--shadow-floating);
+}
+
+.nav-item i {
+    width: 20px; /* Largura fixa para ícones */
+    text-align: center;
+}
+
+.logout-btn {
+    margin-top: auto; /* Empurra para o final do flex container */
+    padding: 16px 20px;
+    background: rgba(220, 20, 60, 0.1); /* Fundo suave para logout */
+    border: 1px solid rgba(220, 20, 60, 0.2);
+    border-radius: 12px;
+    color: var(--accent-red);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    justify-content: center; /* Centraliza o conteúdo do botão */
+}
+
+.logout-btn:hover {
+    background: rgba(220, 20, 60, 0.2);
+    transform: translateY(-2px); /* Efeito sutil ao passar o mouse */
+}
+
+/* Conteúdo Principal */
+.main-content {
+    margin-left: 280px; /* Espaço para a sidebar fixa */
+    padding: var(--padding-base);
+    min-height: 100vh;
+    width: calc(100% - 280px); /* Ocupa o restante da largura */
+    flex-grow: 1; /* Permite que o conteúdo cresça */
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.content-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.add-ticket-btn {
+    padding: 12px 24px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.add-ticket-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-floating);
+}
+
+/* Seções de Conteúdo (Tabs) */
+.content-tab {
+    display: none; /* Esconde todas as tabs por padrão */
+}
+
+.content-tab.active {
+    display: block; /* Exibe a tab ativa */
+    animation: fadeIn 0.4s ease-out; /* Animação de fade-in */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Stats Cards (Dashboard) */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Layout responsivo */
+    gap: var(--gap-base);
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: var(--surface-glass);
+    backdrop-filter: var(--blur-glass);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 28px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden; /* Garante que a borda colorida fique dentro */
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px; /* Linha colorida no topo */
+    background: var(--primary-gradient); /* Gradiente padrão */
+}
+/* Cores específicas para a linha do topo */
+.stat-card.pending::before { background: var(--accent-orange); }
+.stat-card.late::before { background: var(--accent-red); }
+.stat-card.resolved::before { background: var(--accent-green); }
+
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-floating);
+}
+
+.stat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.stat-card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-card-icon.pending {
+    background: rgba(255, 149, 0, 0.1);
+    color: var(--accent-orange);
+}
+
+.stat-card-icon.late {
+    background: rgba(220, 20, 60, 0.1);
+    color: var(--accent-red);
+}
+
+.stat-card-icon.resolved {
+    background: rgba(52, 199, 89, 0.1);
+    color: var(--accent-green);
+}
+
+.stat-card-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.stat-card-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Charts Section (Analytics) */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Layout com uma coluna maior para o gráfico principal */
+    gap: var(--gap-base);
+    margin-bottom: 32px;
+}
+
+.chart-card {
+    background: var(--surface-glass);
+    backdrop-filter: var(--blur-glass);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+}
+
+.chart-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.chart-container {
+    height: 300px; /* Altura fixa para os gráficos */
+    position: relative;
+}
+
+/* Tickets Section (Active and Resolved) */
+.tickets-section {
+    background: var(--surface-glass);
+    backdrop-filter: var(--blur-glass);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: var(--padding-base);
+}
+
+.tickets-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.tickets-header h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap; /* Permite que os filtros quebrem linha em telas menores */
+}
+
+.filter-input {
+    flex: 1; /* Permite que os inputs cresçam */
+    min-width: 150px; /* Largura mínima para inputs */
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    appearance: none; /* Remove estilo padrão do select */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.362%22%20height%3D%22292.362%22%3E%3Cpath%20fill%3D%22%23b0b0b0%22%20d%3D%22M287.151%20193.964L159.088%2065.901c-5.874-5.874-15.388-5.874-21.262%200L5.279%20193.964c-5.874%205.874-5.874%2015.388%200%2021.263l10.631%2010.631c5.874%205.874%2015.388%205.874%2021.263%200L148.45%20131.03l111.277%20111.277c5.874%205.874%2015.388%205.874%2021.263%200l10.631-10.631c5.875-5.875%205.875-15.389%200-21.263z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 12px top 50%;
+    background-size: 12px auto;
+    padding-right: 30px; /* Espaço para o ícone */
+}
+
+.filter-input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.ticket-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Layout responsivo para cards */
+    gap: 16px;
+}
+
+.ticket-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-2px);
+}
+
+.ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 10px; /* Espaço entre número e status */
+}
+
+.ticket-number {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    background: rgba(0, 122, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.ticket-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap; /* Evita quebra de linha no status */
+}
+
+.ticket-status.pending {
+    background: rgba(255, 149, 0, 0.1);
+    color: var(--accent-orange);
+}
+
+.ticket-status.late {
+    background: rgba(220, 20, 60, 0.1);
+    color: var(--accent-red);
+}
+
+.ticket-status.resolved {
+    background: rgba(52, 199, 89, 0.1);
+    color: var(--accent-green);
+}
+
+.ticket-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.ticket-client {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    flex-grow: 1; /* Permite que o cliente ocupe espaço */
+}
+
+.ticket-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: auto; /* Empurra para o final do card flexível */
+}
+
+.ticket-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.ticket-action {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ticket-action.edit {
+    background: rgba(0, 122, 255, 0.1);
+    color: var(--accent-blue);
+}
+
+.ticket-action.delete {
+    background: rgba(220, 20, 60, 0.1);
+    color: var(--accent-red);
+}
+
+.ticket-action:hover {
+    transform: translateY(-1px);
+}
+
+.no-tickets-message,
+.no-history-message {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 20px;
+    grid-column: 1 / -1; /* Centraliza na grid */
+}
+
+
+/* Modal */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Overlay escuro */
+    backdrop-filter: blur(10px); /* Efeito de desfoque no fundo */
+    z-index: 2000; /* Acima de tudo */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex; /* Exibe o modal */
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 24px;
+    width: 90%;
+    max-width: 600px; /* Largura máxima */
+    max-height: 90vh; /* Altura máxima para evitar overflow */
+    overflow-y: auto; /* Adiciona scroll se o conteúdo for grande */
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out; /* Animação de entrada */
+}
+
+@keyframes modalSlideIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    padding: 32px 32px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 32px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 0; /* Remove margin-bottom padrão se usado dentro de grid */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+}
+
+.required-indicator {
+    color: var(--accent-red); /* Indicador de campo obrigatório */
+    margin-left: 4px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px); /* Efeito de vidro nos inputs */
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+textarea.input-field {
+    min-height: 100px; /* Altura mínima para textareas */
+    resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+
+.form-group.full-width {
+    grid-column: 1 / -1; /* Ocupa todas as colunas */
+}
+
+/* Histórico de Movimentações */
+.history-section {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.history-section h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.history-list {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 16px;
+    max-height: 150px; /* Altura máxima para a lista */
+    overflow-y: auto; /* Adiciona scroll se necessário */
+    margin-bottom: 16px;
+}
+
+.history-entry {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.history-entry:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.history-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.history-input-group .input-field {
+    flex-grow: 1;
+}
+
+/* Botões */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none; /* Para links que parecem botões */
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+    box-shadow: var(--shadow-floating);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end; /* Alinha botões à direita */
+    margin-top: 32px;
+}
+
+/* Floating Action Button (FAB) */
+.fab {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 64px;
+    height: 64px;
+    background: var(--primary-gradient);
+    border: none;
+    border-radius: 50%; /* Círculo */
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-floating);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: flex; /* Para centralizar o ícone */
+    align-items: center;
+    justify-content: center;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-elevated);
+}
+
+/* Esconde o FAB em telas maiores */
+@media (min-width: 769px) {
+    .fab {
+        display: none;
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px; /* Sidebar um pouco menor em mobile */
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0; /* Remove margin da sidebar em mobile */
+        width: 100%;
+        padding: 20px; /* Padding menor em mobile */
+    }
+
+    .content-header {
+        flex-direction: column; /* Empilha título e botão em mobile */
+        gap: 16px;
+        align-items: stretch;
+    }
+
+    .content-header h2 {
+        font-size: 1.8rem; /* Título menor */
+    }
+
+    .add-ticket-btn {
+        width: 100%; /* Botão ocupa largura total */
+        justify-content: center;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr; /* Uma coluna para stats em mobile */
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr; /* Uma coluna para gráficos em mobile */
+    }
+
+    .filters {
+        flex-direction: column; /* Empilha filtros em mobile */
+        gap: 12px;
+    }
+
+    .filter-input {
+         min-width: auto; /* Remove largura mínima */
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr; /* Uma coluna para formulário em mobile */
+        gap: 16px;
+    }
+
+    .modal-content {
+        padding: 20px; /* Padding menor no modal em mobile */
+    }
+
+    .modal-header {
+        padding: 20px 20px 0;
+        flex-direction: column; /* Empilha header do modal */
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .modal-title {
+        font-size: 1.3rem;
+    }
+
+    .modal-close {
+        position: absolute; /* Posiciona o botão fechar no canto */
+        top: 15px;
+        right: 15px;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .form-actions {
+        flex-direction: column; /* Empilha botões do formulário */
+        gap: 12px;
+    }
+
+    .form-actions .btn {
+        width: 100%; /* Botões do formulário ocupam largura total */
+    }
+
+    /* Mostra o FAB em telas menores */
+    .fab {
+        display: flex;
+    }
+}

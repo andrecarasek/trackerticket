@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACKER TICKET - Dashboard Premium</title>
+    <!-- Font Inter do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js para Gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Link para o CSS principal (VERSÃO CLARA) -->
+    <link rel="stylesheet" href="style-light.css">
+</head>
+<body>
+
+    <!-- Fundo animado (opcional, para um toque extra) -->
+    <div class="animated-bg"></div>
+
+    <!-- Dashboard Principal -->
+    <div id="dashboard" class="dashboard active">
+
+        <!-- Sidebar (Menu Lateral) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <!-- Logo Gradiente -->
+                <h1 class="app-title">TRACKER TICKET</h1>
+                <p class="app-subtitle">Sistema Premium</p>
+            </div>
+            <nav class="nav-menu">
+                <div class="nav-item active" data-tab="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    Dashboard
+                </div>
+                <div class="nav-item" data-tab="tickets">
+                    <i class="fas fa-ticket-alt"></i>
+                    Tickets Ativos
+                </div>
+                 <div class="nav-item" data-tab="resolved">
+                    <i class="fas fa-check-circle"></i>
+                    Finalizados
+                </div>
+                 <div class="nav-item" data-tab="analytics">
+                    <i class="fas fa-chart-pie"></i>
+                    Analytics
+                </div>
+                <!-- Adicione mais itens de navegação aqui, se necessário -->
+            </nav>
+            <!-- Botão de Logout -->
+            <div class="logout-btn" id="logoutBtn">
+                 <i class="fas fa-sign-out-alt"></i>
+                 Sair
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <!-- Cabeçalho do Conteúdo -->
+            <div class="content-header">
+                 <h2 id="mainContentTitle">Dashboard</h2>
+                 <button class="add-ticket-btn" id="addTicketBtnMainHeader">
+                     <i class="fas fa-plus"></i>
+                     Novo Ticket
+                 </button>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboardTab" class="content-tab active">
+                 <div class="stats-grid">
+                    <div class="stat-card pending"> <!-- Adicionado classe de status para a linha colorida -->
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Pendentes</span>
+                            <div class="stat-card-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="pendingCount">0</div>
+                        <div class="stat-card-label">Tickets aguardando</div>
+                    </div>
+                    <div class="stat-card late"> <!-- Adicionado classe de status -->
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Atrasados</span>
+                            <div class="stat-card-icon late">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="lateCount">0</div>
+                        <div class="stat-card-label">Tickets que passaram do prazo</div>
+                    </div>
+                    <div class="stat-card resolved"> <!-- Adicionado classe de status -->
+                        <div class="stat-card-header">
+                            <span class="stat-card-title">Finalizados</span>
+                            <div class="stat-card-icon resolved">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                        </div>
+                        <div class="stat-card-value" id="resolvedCount">0</div>
+                        <div class="stat-card-label">Tickets concluídos</div>
+                    </div>
+                 </div>
+                 <!-- Adicione mais elementos de dashboard aqui, se necessário -->
+            </div>
+
+            <!-- Tickets Ativos Tab -->
+            <div id="ticketsTab" class="content-tab">
+                <div class="tickets-section">
+                    <div class="tickets-header">
+                        <h3>Tickets Ativos</h3>
+                    </div>
+                    <div class="filters">
+                        <input type="text" id="searchBar" class="filter-input" placeholder="Buscar por Nº, Cliente ou Título...">
+                        <select id="statusFilter" class="filter-input">
+                            <option value="">Todos os Status</option>
+                            <option value="pending">Pendente</option>
+                            <option value="late">Atrasado</option>
+                        </select>
+                        <select id="responsibleFilter" class="filter-input">
+                            <option value="">Todos os Responsáveis</option>
+                            <!-- Opções carregadas via JS -->
+                        </select>
+                    </div>
+                    <div id="activeTicketsContainer" class="ticket-cards-container">
+                        <!-- Tickets ativos serão renderizados aqui -->
+                         <p class="no-tickets-message" style="display: none;">Nenhum ticket ativo encontrado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tickets Finalizados Tab -->
+            <div id="resolvedTab" class="content-tab">
+                 <div class="tickets-section">
+                    <div class="tickets-header">
+                        <h3>Tickets Finalizados</h3>
+                    </div>
+                     <div class="filters">
+                        <input type="text" id="searchBarResolved" class="filter-input" placeholder="Buscar por Nº, Cliente ou Título...">
+                        <select id="responsibleFilterResolved" class="filter-input">
+                            <option value="">Todos os Responsáveis</option>
+                            <!-- Opções carregadas via JS -->
+                        </select>
+                    </div>
+                    <div id="resolvedTicketsContainer" class="ticket-cards-container">
+                        <!-- Tickets finalizados serão renderizados aqui -->
+                         <p class="no-tickets-message" style="display: none;">Nenhum ticket finalizado encontrado.</p>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Analytics Tab -->
+            <div id="analyticsTab" class="content-tab">
+                <div class="content-header">
+                    <h2>Analytics</h2>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Tickets por Status</h3>
+                        <div class="chart-container">
+                            <canvas id="statusChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Tickets por Responsável</h3>
+                         <div class="chart-container">
+                            <canvas id="responsibleChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- Adicione mais gráficos aqui -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Modal para Adicionar/Editar Ticket -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Adicionar Novo Ticket</h2>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="ticketForm">
+                    <!-- Campo escondido para armazenar o ID do ticket em edição -->
+                    <input type="hidden" id="ticketId">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="ticketNumber">Nº Ticket <span class="required-indicator">*</span></label>
+                            <input type="text" id="ticketNumber" class="input-field" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="clientName">Cliente <span class="required-indicator">*</span></label>
+                            <input type="text" id="clientName" class="input-field" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="ticketTitle">Título <span class="required-indicator">*</span></label>
+                            <input type="text" id="ticketTitle" class="input-field" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="ticketDescription">Descrição</label>
+                            <textarea id="ticketDescription" class="input-field"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="responsible">Responsável <span class="required-indicator">*</span></label>
+                            <input type="text" id="responsible" class="input-field" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="openDate">Data de Abertura <span class="required-indicator">*</span></label>
+                            <input type="date" id="openDate" class="input-field" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastMovementDate">Última Movimentação</label>
+                            <input type="date" id="lastMovementDate" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="nextActionDate">Próxima Ação</label>
+                            <input type="date" id="nextActionDate" class="input-field">
+                        </div>
+                        <div class="form-group">
+                            <label for="ticketStatus">Status <span class="required-indicator">*</span></label>
+                            <select id="ticketStatus" class="input-field" required>
+                                <option value="pending">Pendente</option>
+                                <option value="late">Atrasado</option>
+                                <option value="resolved">Finalizado</option>
+                            </select>
+                        </div>
+                         <div class="form-group full-width">
+                            <label for="observations">Observações</label>
+                            <textarea id="observations" class="input-field"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Seção de Histórico (Visível apenas na edição) -->
+                    <div id="historySection" class="history-section">
+                        <h3>Histórico de Movimentações</h3>
+                        <div id="ticketHistoryList" class="history-list">
+                            <!-- Entradas de histórico serão carregadas aqui pelo JS -->
+                            <p class="no-history-message" style="display: none;">Nenhuma movimentação registrada.</p>
+                        </div>
+                        <div class="history-input-group">
+                            <input type="text" id="newHistoryEntry" class="input-field" placeholder="Adicionar nova movimentação...">
+                            <button type="button" id="addHistoryBtn" class="btn btn-secondary"><i class="fas fa-plus"></i> Adicionar</button>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancelModalBtn" class="btn btn-secondary"><i class="fas fa-times-circle"></i> Cancelar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Ticket</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+     <!-- Floating Action Button (FAB) para mobile -->
+    <button class="fab" id="fabAddTicketBtn">
+        <i class="fas fa-plus"></i>
+    </button>
+
+
+    <!-- Link para o JavaScript principal -->
+    <script src="script.js"></script>
+     <!-- Link para o JavaScript de autenticação -->
+    <script src="auth.js"></script>
+</body>
+</html>

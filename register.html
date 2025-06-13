@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACKER TICKET - Cadastro</title>
+     <!-- Font Inter do Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Link para o CSS de autenticação (VERSÃO CLARA) -->
+    <link rel="stylesheet" href="auth-light.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div id="registerScreen" class="auth-container">
+        <div class="auth-card">
+            <div class="logo">
+                <h1>TRACKER TICKET</h1>
+                <p>Criar Nova Conta</p>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Usuário</label>
+                    <input type="text" id="registerUsername" class="input-field" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Senha</label>
+                    <input type="password" id="registerPassword" class="input-field" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Senha</label>
+                    <input type="password" id="confirmPassword" class="input-field" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Cadastrar
+                </button>
+            </form>
+            <div id="registerMessage" class="message" style="display: none;"></div>
+            <div class="auth-link">
+                Já tem uma conta? <a href="login.html">Faça login</a>
+            </div>
+        </div>
+    </div>
+
+     <!-- Link para o JavaScript de autenticação -->
+    <script src="auth.js"></script>
+</body>
+</html>
